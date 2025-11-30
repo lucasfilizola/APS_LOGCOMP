@@ -1,0 +1,21 @@
+; Impressora Assembly
+
+PUSH 30
+STORE 0
+GET_INK_LEVEL
+PUSH 20
+LT
+JUMPZ L1
+PRINTS "Tinta baixa!"
+L1:
+PUSH 0
+POP R0
+SET_COLOR R0
+PUSH 1
+POP R0
+SET_QUALITY R0
+LOAD 0
+POP R0
+PRINT_DOC "prova.pdf" R0
+PRINTS "Concluído!"
+HALT

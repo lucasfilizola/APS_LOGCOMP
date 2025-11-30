@@ -1,0 +1,23 @@
+// Exemplo: Professora imprimindo prova
+int alunos = 30;
+
+imprimir_texto("Verificando recursos...");
+
+se (nivel_tinta() < 20) {
+    imprimir_texto("AVISO: Tinta baixa!");
+    verificar_tinta();
+}
+
+se (qtd_papel() < alunos) {
+    imprimir_texto("ERRO: Papel insuficiente!");
+} senao {
+    definir_cor(falso);
+    definir_qualidade(MEDIA);
+
+    imprimir_texto("Imprimindo provas...");
+    imprimir("prova_matematica.pdf", alunos);
+
+    imprimir_texto("Impressão concluída!");
+    imprimir_texto("Total de páginas:");
+    imprimir(paginas_impressas());
+}

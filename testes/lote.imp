@@ -1,0 +1,29 @@
+// Exemplo: Impressão em lote com verificação
+int turma = 1;
+int alunos_por_turma = 35;
+
+enquanto (turma <= 3) {
+    imprimir_texto("Processando turma:");
+    imprimir(turma);
+
+    se (nivel_tinta() < 20) {
+        imprimir_texto("Reabastecer tinta!");
+        verificar_tinta();
+    }
+
+    se (qtd_papel() < alunos_por_turma) {
+        imprimir_texto("Reabastecer papel!");
+        verificar_papel();
+    }
+
+    definir_cor(falso);
+    definir_qualidade(MEDIA);
+
+    imprimir("prova_turma.pdf", alunos_por_turma);
+
+    turma = turma + 1;
+}
+
+imprimir_texto("Todas as turmas processadas!");
+imprimir_texto("Total impresso:");
+imprimir(paginas_impressas());

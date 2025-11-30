@@ -1,0 +1,12 @@
+// Teste básico da linguagem Impressora
+int alunos = 30;
+
+se (nivel_tinta() < 20) {
+    imprimir_texto("Tinta baixa!");
+}
+
+definir_cor(falso);
+definir_qualidade(MEDIA);
+imprimir("prova.pdf", alunos);
+
+imprimir_texto("Concluído!");

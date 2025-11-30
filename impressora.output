@@ -1,0 +1,2069 @@
+Terminals unused in grammar
+
+    T_ERROR
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ε
+    2        | stmtlist
+
+    3 stmtlist: stmt
+    4         | stmtlist stmt
+
+    5 decl: T_INT T_IDENT optInitNum ';'
+    6     | T_STRING T_IDENT optInitStr ';'
+
+    7 optInitNum: ε
+    8           | '=' expr
+
+    9 optInitStr: ε
+   10           | '=' T_STRING_LIT
+
+   11 stmt: decl
+   12     | assign ';'
+   13     | ifStmt
+   14     | whileStmt
+   15     | block
+   16     | printStmt
+   17     | printerStmt
+   18     | ';'
+
+   19 assign: T_IDENT '=' expr
+   20       | T_IDENT '=' T_STRING_LIT
+
+   21 ifStmt: T_SE '(' expr ')' stmt
+   22       | T_SE '(' expr ')' stmt T_SENAO stmt
+
+   23 whileStmt: T_ENQUANTO '(' expr ')' stmt
+
+   24 block: '{' '}'
+   25      | '{' stmtlist '}'
+
+   26 printStmt: T_IMPRIMIR '(' expr ')' ';'
+   27          | T_IMPRIMIR '(' T_STRING_LIT ')' ';'
+   28          | T_IMPRIMIR_TEXTO '(' T_STRING_LIT ')' ';'
+
+   29 printerStmt: printDoc
+   30            | printPage
+   31            | setColor
+   32            | setQuality
+   33            | setPaper
+   34            | checkInk
+   35            | checkPaper
+   36            | waitReady
+   37            | reset
+
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT ',' expr ')' ';'
+
+   39 printPage: T_IMPRIMIR_PAGINA '(' T_STRING_LIT ')' ';'
+
+   40 setColor: T_DEFINIR_COR '(' expr ')' ';'
+
+   41 setQuality: T_DEFINIR_QUALIDADE '(' quality ')' ';'
+
+   42 setPaper: T_DEFINIR_PAPEL '(' paperType ')' ';'
+
+   43 checkInk: T_VERIFICAR_TINTA '(' ')' ';'
+
+   44 checkPaper: T_VERIFICAR_PAPEL '(' ')' ';'
+
+   45 waitReady: T_AGUARDAR_PRONTA '(' ')' ';'
+
+   46 reset: T_RESETAR '(' ')' ';'
+
+   47 quality: T_BAIXA
+   48        | T_MEDIA
+   49        | T_ALTA
+
+   50 paperType: T_A4
+   51          | T_CARTA
+   52          | T_A3
+
+   53 expr: equality
+
+   54 equality: relational
+   55         | equality T_EQ relational
+   56         | equality T_NE relational
+
+   57 relational: additive
+   58           | relational '<' additive
+   59           | relational '>' additive
+   60           | relational T_LE additive
+   61           | relational T_GE additive
+
+   62 additive: term
+   63         | additive '+' term
+   64         | additive '-' term
+
+   65 term: factor
+   66     | term '*' factor
+   67     | term '/' factor
+
+   68 factor: primary
+   69       | '-' factor
+
+   70 primary: T_NUMBER
+   71        | T_IDENT
+   72        | '(' expr ')'
+   73        | T_NIVEL_TINTA '(' ')'
+   74        | T_QTD_PAPEL '(' ')'
+   75        | T_ESTA_PRONTA '(' ')'
+   76        | T_PAGINAS_IMPRESSAS '(' ')'
+   77        | T_MODO_COR '(' ')'
+   78        | T_TAMANHO_FILA '(' ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 21 22 23 26 27 28 38 39 40 41 42 43 44 45 46 72 73 74 75 76 77 78
+    ')' (41) 21 22 23 26 27 28 38 39 40 41 42 43 44 45 46 72 73 74 75 76 77 78
+    '*' (42) 66
+    '+' (43) 63
+    ',' (44) 38
+    '-' (45) 64 69
+    '/' (47) 67
+    ';' (59) 5 6 12 18 26 27 28 38 39 40 41 42 43 44 45 46
+    '<' (60) 58
+    '=' (61) 8 10 19 20
+    '>' (62) 59
+    '{' (123) 24 25
+    '}' (125) 24 25
+    error (256)
+    T_INT (258) 5
+    T_STRING (259) 6
+    T_SE (260) 21 22
+    T_SENAO (261) 22
+    T_ENQUANTO (262) 23
+    T_IMPRIMIR (263) 26 27 38
+    T_IMPRIMIR_TEXTO (264) 28
+    T_IMPRIMIR_PAGINA (265) 39
+    T_DEFINIR_COR (266) 40
+    T_DEFINIR_QUALIDADE (267) 41
+    T_DEFINIR_PAPEL (268) 42
+    T_VERIFICAR_TINTA (269) 43
+    T_VERIFICAR_PAPEL (270) 44
+    T_AGUARDAR_PRONTA (271) 45
+    T_RESETAR (272) 46
+    T_BAIXA (273) 47
+    T_MEDIA (274) 48
+    T_ALTA (275) 49
+    T_A4 (276) 50
+    T_CARTA (277) 51
+    T_A3 (278) 52
+    T_NIVEL_TINTA (279) 73
+    T_QTD_PAPEL (280) 74
+    T_ESTA_PRONTA (281) 75
+    T_PAGINAS_IMPRESSAS (282) 76
+    T_MODO_COR (283) 77
+    T_TAMANHO_FILA (284) 78
+    T_EQ (285) 55
+    T_NE (286) 56
+    T_LE (287) 60
+    T_GE (288) 61
+    T_ERROR (289)
+    T_IDENT <sval> (290) 5 6 19 20 71
+    T_STRING_LIT <sval> (291) 10 20 27 28 38 39
+    T_NUMBER <ival> (292) 70
+    LOWER_THAN_ELSE (293)
+    UMINUS (294)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (53)
+        on left: 0
+    program <node> (54)
+        on left: 1 2
+        on right: 0
+    stmtlist <list> (55)
+        on left: 3 4
+        on right: 2 4 25
+    decl <node> (56)
+        on left: 5 6
+        on right: 11
+    optInitNum <node> (57)
+        on left: 7 8
+        on right: 5
+    optInitStr <node> (58)
+        on left: 9 10
+        on right: 6
+    stmt <node> (59)
+        on left: 11 12 13 14 15 16 17 18
+        on right: 3 4 21 22 23
+    assign <node> (60)
+        on left: 19 20
+        on right: 12
+    ifStmt <node> (61)
+        on left: 21 22
+        on right: 13
+    whileStmt <node> (62)
+        on left: 23
+        on right: 14
+    block <node> (63)
+        on left: 24 25
+        on right: 15
+    printStmt <node> (64)
+        on left: 26 27 28
+        on right: 16
+    printerStmt <node> (65)
+        on left: 29 30 31 32 33 34 35 36 37
+        on right: 17
+    printDoc <node> (66)
+        on left: 38
+        on right: 29
+    printPage <node> (67)
+        on left: 39
+        on right: 30
+    setColor <node> (68)
+        on left: 40
+        on right: 31
+    setQuality <node> (69)
+        on left: 41
+        on right: 32
+    setPaper <node> (70)
+        on left: 42
+        on right: 33
+    checkInk <node> (71)
+        on left: 43
+        on right: 34
+    checkPaper <node> (72)
+        on left: 44
+        on right: 35
+    waitReady <node> (73)
+        on left: 45
+        on right: 36
+    reset <node> (74)
+        on left: 46
+        on right: 37
+    quality <node> (75)
+        on left: 47 48 49
+        on right: 41
+    paperType <node> (76)
+        on left: 50 51 52
+        on right: 42
+    expr <node> (77)
+        on left: 53
+        on right: 8 19 21 22 23 26 38 40 72
+    equality <node> (78)
+        on left: 54 55 56
+        on right: 53 55 56
+    relational <node> (79)
+        on left: 57 58 59 60 61
+        on right: 54 55 56 58 59 60 61
+    additive <node> (80)
+        on left: 62 63 64
+        on right: 57 58 59 60 61 63 64
+    term <node> (81)
+        on left: 65 66 67
+        on right: 62 63 64 66 67
+    factor <node> (82)
+        on left: 68 69
+        on right: 65 66 67 69
+    primary <node> (83)
+        on left: 70 71 72 73 74 75 76 77 78
+        on right: 68
+
+
+State 0
+
+    0 $accept: • program $end
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+
+    $default  reduce using rule 1 (program)
+
+    program      go to state 18
+    stmtlist     go to state 19
+    decl         go to state 20
+    stmt         go to state 21
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 1
+
+    5 decl: T_INT • T_IDENT optInitNum ';'
+
+    T_IDENT  shift, and go to state 37
+
+
+State 2
+
+    6 decl: T_STRING • T_IDENT optInitStr ';'
+
+    T_IDENT  shift, and go to state 38
+
+
+State 3
+
+   21 ifStmt: T_SE • '(' expr ')' stmt
+   22       | T_SE • '(' expr ')' stmt T_SENAO stmt
+
+    '('  shift, and go to state 39
+
+
+State 4
+
+   23 whileStmt: T_ENQUANTO • '(' expr ')' stmt
+
+    '('  shift, and go to state 40
+
+
+State 5
+
+   26 printStmt: T_IMPRIMIR • '(' expr ')' ';'
+   27          | T_IMPRIMIR • '(' T_STRING_LIT ')' ';'
+   38 printDoc: T_IMPRIMIR • '(' T_STRING_LIT ',' expr ')' ';'
+
+    '('  shift, and go to state 41
+
+
+State 6
+
+   28 printStmt: T_IMPRIMIR_TEXTO • '(' T_STRING_LIT ')' ';'
+
+    '('  shift, and go to state 42
+
+
+State 7
+
+   39 printPage: T_IMPRIMIR_PAGINA • '(' T_STRING_LIT ')' ';'
+
+    '('  shift, and go to state 43
+
+
+State 8
+
+   40 setColor: T_DEFINIR_COR • '(' expr ')' ';'
+
+    '('  shift, and go to state 44
+
+
+State 9
+
+   41 setQuality: T_DEFINIR_QUALIDADE • '(' quality ')' ';'
+
+    '('  shift, and go to state 45
+
+
+State 10
+
+   42 setPaper: T_DEFINIR_PAPEL • '(' paperType ')' ';'
+
+    '('  shift, and go to state 46
+
+
+State 11
+
+   43 checkInk: T_VERIFICAR_TINTA • '(' ')' ';'
+
+    '('  shift, and go to state 47
+
+
+State 12
+
+   44 checkPaper: T_VERIFICAR_PAPEL • '(' ')' ';'
+
+    '('  shift, and go to state 48
+
+
+State 13
+
+   45 waitReady: T_AGUARDAR_PRONTA • '(' ')' ';'
+
+    '('  shift, and go to state 49
+
+
+State 14
+
+   46 reset: T_RESETAR • '(' ')' ';'
+
+    '('  shift, and go to state 50
+
+
+State 15
+
+   19 assign: T_IDENT • '=' expr
+   20       | T_IDENT • '=' T_STRING_LIT
+
+    '='  shift, and go to state 51
+
+
+State 16
+
+   18 stmt: ';' •
+
+    $default  reduce using rule 18 (stmt)
+
+
+State 17
+
+   24 block: '{' • '}'
+   25      | '{' • stmtlist '}'
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+    '}'                  shift, and go to state 52
+
+    stmtlist     go to state 53
+    decl         go to state 20
+    stmt         go to state 21
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 18
+
+    0 $accept: program • $end
+
+    $end  shift, and go to state 54
+
+
+State 19
+
+    2 program: stmtlist •
+    4 stmtlist: stmtlist • stmt
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+
+    $default  reduce using rule 2 (program)
+
+    decl         go to state 20
+    stmt         go to state 55
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 20
+
+   11 stmt: decl •
+
+    $default  reduce using rule 11 (stmt)
+
+
+State 21
+
+    3 stmtlist: stmt •
+
+    $default  reduce using rule 3 (stmtlist)
+
+
+State 22
+
+   12 stmt: assign • ';'
+
+    ';'  shift, and go to state 56
+
+
+State 23
+
+   13 stmt: ifStmt •
+
+    $default  reduce using rule 13 (stmt)
+
+
+State 24
+
+   14 stmt: whileStmt •
+
+    $default  reduce using rule 14 (stmt)
+
+
+State 25
+
+   15 stmt: block •
+
+    $default  reduce using rule 15 (stmt)
+
+
+State 26
+
+   16 stmt: printStmt •
+
+    $default  reduce using rule 16 (stmt)
+
+
+State 27
+
+   17 stmt: printerStmt •
+
+    $default  reduce using rule 17 (stmt)
+
+
+State 28
+
+   29 printerStmt: printDoc •
+
+    $default  reduce using rule 29 (printerStmt)
+
+
+State 29
+
+   30 printerStmt: printPage •
+
+    $default  reduce using rule 30 (printerStmt)
+
+
+State 30
+
+   31 printerStmt: setColor •
+
+    $default  reduce using rule 31 (printerStmt)
+
+
+State 31
+
+   32 printerStmt: setQuality •
+
+    $default  reduce using rule 32 (printerStmt)
+
+
+State 32
+
+   33 printerStmt: setPaper •
+
+    $default  reduce using rule 33 (printerStmt)
+
+
+State 33
+
+   34 printerStmt: checkInk •
+
+    $default  reduce using rule 34 (printerStmt)
+
+
+State 34
+
+   35 printerStmt: checkPaper •
+
+    $default  reduce using rule 35 (printerStmt)
+
+
+State 35
+
+   36 printerStmt: waitReady •
+
+    $default  reduce using rule 36 (printerStmt)
+
+
+State 36
+
+   37 printerStmt: reset •
+
+    $default  reduce using rule 37 (printerStmt)
+
+
+State 37
+
+    5 decl: T_INT T_IDENT • optInitNum ';'
+
+    '='  shift, and go to state 57
+
+    $default  reduce using rule 7 (optInitNum)
+
+    optInitNum  go to state 58
+
+
+State 38
+
+    6 decl: T_STRING T_IDENT • optInitStr ';'
+
+    '='  shift, and go to state 59
+
+    $default  reduce using rule 9 (optInitStr)
+
+    optInitStr  go to state 60
+
+
+State 39
+
+   21 ifStmt: T_SE '(' • expr ')' stmt
+   22       | T_SE '(' • expr ')' stmt T_SENAO stmt
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 71
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 40
+
+   23 whileStmt: T_ENQUANTO '(' • expr ')' stmt
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 78
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 41
+
+   26 printStmt: T_IMPRIMIR '(' • expr ')' ';'
+   27          | T_IMPRIMIR '(' • T_STRING_LIT ')' ';'
+   38 printDoc: T_IMPRIMIR '(' • T_STRING_LIT ',' expr ')' ';'
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_STRING_LIT         shift, and go to state 79
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 80
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 42
+
+   28 printStmt: T_IMPRIMIR_TEXTO '(' • T_STRING_LIT ')' ';'
+
+    T_STRING_LIT  shift, and go to state 81
+
+
+State 43
+
+   39 printPage: T_IMPRIMIR_PAGINA '(' • T_STRING_LIT ')' ';'
+
+    T_STRING_LIT  shift, and go to state 82
+
+
+State 44
+
+   40 setColor: T_DEFINIR_COR '(' • expr ')' ';'
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 83
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 45
+
+   41 setQuality: T_DEFINIR_QUALIDADE '(' • quality ')' ';'
+
+    T_BAIXA  shift, and go to state 84
+    T_MEDIA  shift, and go to state 85
+    T_ALTA   shift, and go to state 86
+
+    quality  go to state 87
+
+
+State 46
+
+   42 setPaper: T_DEFINIR_PAPEL '(' • paperType ')' ';'
+
+    T_A4     shift, and go to state 88
+    T_CARTA  shift, and go to state 89
+    T_A3     shift, and go to state 90
+
+    paperType  go to state 91
+
+
+State 47
+
+   43 checkInk: T_VERIFICAR_TINTA '(' • ')' ';'
+
+    ')'  shift, and go to state 92
+
+
+State 48
+
+   44 checkPaper: T_VERIFICAR_PAPEL '(' • ')' ';'
+
+    ')'  shift, and go to state 93
+
+
+State 49
+
+   45 waitReady: T_AGUARDAR_PRONTA '(' • ')' ';'
+
+    ')'  shift, and go to state 94
+
+
+State 50
+
+   46 reset: T_RESETAR '(' • ')' ';'
+
+    ')'  shift, and go to state 95
+
+
+State 51
+
+   19 assign: T_IDENT '=' • expr
+   20       | T_IDENT '=' • T_STRING_LIT
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_STRING_LIT         shift, and go to state 96
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 97
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 52
+
+   24 block: '{' '}' •
+
+    $default  reduce using rule 24 (block)
+
+
+State 53
+
+    4 stmtlist: stmtlist • stmt
+   25 block: '{' stmtlist • '}'
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+    '}'                  shift, and go to state 98
+
+    decl         go to state 20
+    stmt         go to state 55
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 54
+
+    0 $accept: program $end •
+
+    $default  accept
+
+
+State 55
+
+    4 stmtlist: stmtlist stmt •
+
+    $default  reduce using rule 4 (stmtlist)
+
+
+State 56
+
+   12 stmt: assign ';' •
+
+    $default  reduce using rule 12 (stmt)
+
+
+State 57
+
+    8 optInitNum: '=' • expr
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 99
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 58
+
+    5 decl: T_INT T_IDENT optInitNum • ';'
+
+    ';'  shift, and go to state 100
+
+
+State 59
+
+   10 optInitStr: '=' • T_STRING_LIT
+
+    T_STRING_LIT  shift, and go to state 101
+
+
+State 60
+
+    6 decl: T_STRING T_IDENT optInitStr • ';'
+
+    ';'  shift, and go to state 102
+
+
+State 61
+
+   73 primary: T_NIVEL_TINTA • '(' ')'
+
+    '('  shift, and go to state 103
+
+
+State 62
+
+   74 primary: T_QTD_PAPEL • '(' ')'
+
+    '('  shift, and go to state 104
+
+
+State 63
+
+   75 primary: T_ESTA_PRONTA • '(' ')'
+
+    '('  shift, and go to state 105
+
+
+State 64
+
+   76 primary: T_PAGINAS_IMPRESSAS • '(' ')'
+
+    '('  shift, and go to state 106
+
+
+State 65
+
+   77 primary: T_MODO_COR • '(' ')'
+
+    '('  shift, and go to state 107
+
+
+State 66
+
+   78 primary: T_TAMANHO_FILA • '(' ')'
+
+    '('  shift, and go to state 108
+
+
+State 67
+
+   71 primary: T_IDENT •
+
+    $default  reduce using rule 71 (primary)
+
+
+State 68
+
+   70 primary: T_NUMBER •
+
+    $default  reduce using rule 70 (primary)
+
+
+State 69
+
+   69 factor: '-' • factor
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    factor   go to state 109
+    primary  go to state 77
+
+
+State 70
+
+   72 primary: '(' • expr ')'
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 110
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 71
+
+   21 ifStmt: T_SE '(' expr • ')' stmt
+   22       | T_SE '(' expr • ')' stmt T_SENAO stmt
+
+    ')'  shift, and go to state 111
+
+
+State 72
+
+   53 expr: equality •
+   55 equality: equality • T_EQ relational
+   56         | equality • T_NE relational
+
+    T_EQ  shift, and go to state 112
+    T_NE  shift, and go to state 113
+
+    $default  reduce using rule 53 (expr)
+
+
+State 73
+
+   54 equality: relational •
+   58 relational: relational • '<' additive
+   59           | relational • '>' additive
+   60           | relational • T_LE additive
+   61           | relational • T_GE additive
+
+    T_LE  shift, and go to state 114
+    T_GE  shift, and go to state 115
+    '<'   shift, and go to state 116
+    '>'   shift, and go to state 117
+
+    $default  reduce using rule 54 (equality)
+
+
+State 74
+
+   57 relational: additive •
+   63 additive: additive • '+' term
+   64         | additive • '-' term
+
+    '+'  shift, and go to state 118
+    '-'  shift, and go to state 119
+
+    $default  reduce using rule 57 (relational)
+
+
+State 75
+
+   62 additive: term •
+   66 term: term • '*' factor
+   67     | term • '/' factor
+
+    '*'  shift, and go to state 120
+    '/'  shift, and go to state 121
+
+    $default  reduce using rule 62 (additive)
+
+
+State 76
+
+   65 term: factor •
+
+    $default  reduce using rule 65 (term)
+
+
+State 77
+
+   68 factor: primary •
+
+    $default  reduce using rule 68 (factor)
+
+
+State 78
+
+   23 whileStmt: T_ENQUANTO '(' expr • ')' stmt
+
+    ')'  shift, and go to state 122
+
+
+State 79
+
+   27 printStmt: T_IMPRIMIR '(' T_STRING_LIT • ')' ';'
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT • ',' expr ')' ';'
+
+    ')'  shift, and go to state 123
+    ','  shift, and go to state 124
+
+
+State 80
+
+   26 printStmt: T_IMPRIMIR '(' expr • ')' ';'
+
+    ')'  shift, and go to state 125
+
+
+State 81
+
+   28 printStmt: T_IMPRIMIR_TEXTO '(' T_STRING_LIT • ')' ';'
+
+    ')'  shift, and go to state 126
+
+
+State 82
+
+   39 printPage: T_IMPRIMIR_PAGINA '(' T_STRING_LIT • ')' ';'
+
+    ')'  shift, and go to state 127
+
+
+State 83
+
+   40 setColor: T_DEFINIR_COR '(' expr • ')' ';'
+
+    ')'  shift, and go to state 128
+
+
+State 84
+
+   47 quality: T_BAIXA •
+
+    $default  reduce using rule 47 (quality)
+
+
+State 85
+
+   48 quality: T_MEDIA •
+
+    $default  reduce using rule 48 (quality)
+
+
+State 86
+
+   49 quality: T_ALTA •
+
+    $default  reduce using rule 49 (quality)
+
+
+State 87
+
+   41 setQuality: T_DEFINIR_QUALIDADE '(' quality • ')' ';'
+
+    ')'  shift, and go to state 129
+
+
+State 88
+
+   50 paperType: T_A4 •
+
+    $default  reduce using rule 50 (paperType)
+
+
+State 89
+
+   51 paperType: T_CARTA •
+
+    $default  reduce using rule 51 (paperType)
+
+
+State 90
+
+   52 paperType: T_A3 •
+
+    $default  reduce using rule 52 (paperType)
+
+
+State 91
+
+   42 setPaper: T_DEFINIR_PAPEL '(' paperType • ')' ';'
+
+    ')'  shift, and go to state 130
+
+
+State 92
+
+   43 checkInk: T_VERIFICAR_TINTA '(' ')' • ';'
+
+    ';'  shift, and go to state 131
+
+
+State 93
+
+   44 checkPaper: T_VERIFICAR_PAPEL '(' ')' • ';'
+
+    ';'  shift, and go to state 132
+
+
+State 94
+
+   45 waitReady: T_AGUARDAR_PRONTA '(' ')' • ';'
+
+    ';'  shift, and go to state 133
+
+
+State 95
+
+   46 reset: T_RESETAR '(' ')' • ';'
+
+    ';'  shift, and go to state 134
+
+
+State 96
+
+   20 assign: T_IDENT '=' T_STRING_LIT •
+
+    $default  reduce using rule 20 (assign)
+
+
+State 97
+
+   19 assign: T_IDENT '=' expr •
+
+    $default  reduce using rule 19 (assign)
+
+
+State 98
+
+   25 block: '{' stmtlist '}' •
+
+    $default  reduce using rule 25 (block)
+
+
+State 99
+
+    8 optInitNum: '=' expr •
+
+    $default  reduce using rule 8 (optInitNum)
+
+
+State 100
+
+    5 decl: T_INT T_IDENT optInitNum ';' •
+
+    $default  reduce using rule 5 (decl)
+
+
+State 101
+
+   10 optInitStr: '=' T_STRING_LIT •
+
+    $default  reduce using rule 10 (optInitStr)
+
+
+State 102
+
+    6 decl: T_STRING T_IDENT optInitStr ';' •
+
+    $default  reduce using rule 6 (decl)
+
+
+State 103
+
+   73 primary: T_NIVEL_TINTA '(' • ')'
+
+    ')'  shift, and go to state 135
+
+
+State 104
+
+   74 primary: T_QTD_PAPEL '(' • ')'
+
+    ')'  shift, and go to state 136
+
+
+State 105
+
+   75 primary: T_ESTA_PRONTA '(' • ')'
+
+    ')'  shift, and go to state 137
+
+
+State 106
+
+   76 primary: T_PAGINAS_IMPRESSAS '(' • ')'
+
+    ')'  shift, and go to state 138
+
+
+State 107
+
+   77 primary: T_MODO_COR '(' • ')'
+
+    ')'  shift, and go to state 139
+
+
+State 108
+
+   78 primary: T_TAMANHO_FILA '(' • ')'
+
+    ')'  shift, and go to state 140
+
+
+State 109
+
+   69 factor: '-' factor •
+
+    $default  reduce using rule 69 (factor)
+
+
+State 110
+
+   72 primary: '(' expr • ')'
+
+    ')'  shift, and go to state 141
+
+
+State 111
+
+   21 ifStmt: T_SE '(' expr ')' • stmt
+   22       | T_SE '(' expr ')' • stmt T_SENAO stmt
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+
+    decl         go to state 20
+    stmt         go to state 142
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 112
+
+   55 equality: equality T_EQ • relational
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    relational  go to state 143
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 113
+
+   56 equality: equality T_NE • relational
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    relational  go to state 144
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 114
+
+   60 relational: relational T_LE • additive
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    additive  go to state 145
+    term      go to state 75
+    factor    go to state 76
+    primary   go to state 77
+
+
+State 115
+
+   61 relational: relational T_GE • additive
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    additive  go to state 146
+    term      go to state 75
+    factor    go to state 76
+    primary   go to state 77
+
+
+State 116
+
+   58 relational: relational '<' • additive
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    additive  go to state 147
+    term      go to state 75
+    factor    go to state 76
+    primary   go to state 77
+
+
+State 117
+
+   59 relational: relational '>' • additive
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    additive  go to state 148
+    term      go to state 75
+    factor    go to state 76
+    primary   go to state 77
+
+
+State 118
+
+   63 additive: additive '+' • term
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    term     go to state 149
+    factor   go to state 76
+    primary  go to state 77
+
+
+State 119
+
+   64 additive: additive '-' • term
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    term     go to state 150
+    factor   go to state 76
+    primary  go to state 77
+
+
+State 120
+
+   66 term: term '*' • factor
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    factor   go to state 151
+    primary  go to state 77
+
+
+State 121
+
+   67 term: term '/' • factor
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    factor   go to state 152
+    primary  go to state 77
+
+
+State 122
+
+   23 whileStmt: T_ENQUANTO '(' expr ')' • stmt
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+
+    decl         go to state 20
+    stmt         go to state 153
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 123
+
+   27 printStmt: T_IMPRIMIR '(' T_STRING_LIT ')' • ';'
+
+    ';'  shift, and go to state 154
+
+
+State 124
+
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT ',' • expr ')' ';'
+
+    T_NIVEL_TINTA        shift, and go to state 61
+    T_QTD_PAPEL          shift, and go to state 62
+    T_ESTA_PRONTA        shift, and go to state 63
+    T_PAGINAS_IMPRESSAS  shift, and go to state 64
+    T_MODO_COR           shift, and go to state 65
+    T_TAMANHO_FILA       shift, and go to state 66
+    T_IDENT              shift, and go to state 67
+    T_NUMBER             shift, and go to state 68
+    '-'                  shift, and go to state 69
+    '('                  shift, and go to state 70
+
+    expr        go to state 155
+    equality    go to state 72
+    relational  go to state 73
+    additive    go to state 74
+    term        go to state 75
+    factor      go to state 76
+    primary     go to state 77
+
+
+State 125
+
+   26 printStmt: T_IMPRIMIR '(' expr ')' • ';'
+
+    ';'  shift, and go to state 156
+
+
+State 126
+
+   28 printStmt: T_IMPRIMIR_TEXTO '(' T_STRING_LIT ')' • ';'
+
+    ';'  shift, and go to state 157
+
+
+State 127
+
+   39 printPage: T_IMPRIMIR_PAGINA '(' T_STRING_LIT ')' • ';'
+
+    ';'  shift, and go to state 158
+
+
+State 128
+
+   40 setColor: T_DEFINIR_COR '(' expr ')' • ';'
+
+    ';'  shift, and go to state 159
+
+
+State 129
+
+   41 setQuality: T_DEFINIR_QUALIDADE '(' quality ')' • ';'
+
+    ';'  shift, and go to state 160
+
+
+State 130
+
+   42 setPaper: T_DEFINIR_PAPEL '(' paperType ')' • ';'
+
+    ';'  shift, and go to state 161
+
+
+State 131
+
+   43 checkInk: T_VERIFICAR_TINTA '(' ')' ';' •
+
+    $default  reduce using rule 43 (checkInk)
+
+
+State 132
+
+   44 checkPaper: T_VERIFICAR_PAPEL '(' ')' ';' •
+
+    $default  reduce using rule 44 (checkPaper)
+
+
+State 133
+
+   45 waitReady: T_AGUARDAR_PRONTA '(' ')' ';' •
+
+    $default  reduce using rule 45 (waitReady)
+
+
+State 134
+
+   46 reset: T_RESETAR '(' ')' ';' •
+
+    $default  reduce using rule 46 (reset)
+
+
+State 135
+
+   73 primary: T_NIVEL_TINTA '(' ')' •
+
+    $default  reduce using rule 73 (primary)
+
+
+State 136
+
+   74 primary: T_QTD_PAPEL '(' ')' •
+
+    $default  reduce using rule 74 (primary)
+
+
+State 137
+
+   75 primary: T_ESTA_PRONTA '(' ')' •
+
+    $default  reduce using rule 75 (primary)
+
+
+State 138
+
+   76 primary: T_PAGINAS_IMPRESSAS '(' ')' •
+
+    $default  reduce using rule 76 (primary)
+
+
+State 139
+
+   77 primary: T_MODO_COR '(' ')' •
+
+    $default  reduce using rule 77 (primary)
+
+
+State 140
+
+   78 primary: T_TAMANHO_FILA '(' ')' •
+
+    $default  reduce using rule 78 (primary)
+
+
+State 141
+
+   72 primary: '(' expr ')' •
+
+    $default  reduce using rule 72 (primary)
+
+
+State 142
+
+   21 ifStmt: T_SE '(' expr ')' stmt •
+   22       | T_SE '(' expr ')' stmt • T_SENAO stmt
+
+    T_SENAO  shift, and go to state 162
+
+    $default  reduce using rule 21 (ifStmt)
+
+
+State 143
+
+   55 equality: equality T_EQ relational •
+   58 relational: relational • '<' additive
+   59           | relational • '>' additive
+   60           | relational • T_LE additive
+   61           | relational • T_GE additive
+
+    T_LE  shift, and go to state 114
+    T_GE  shift, and go to state 115
+    '<'   shift, and go to state 116
+    '>'   shift, and go to state 117
+
+    $default  reduce using rule 55 (equality)
+
+
+State 144
+
+   56 equality: equality T_NE relational •
+   58 relational: relational • '<' additive
+   59           | relational • '>' additive
+   60           | relational • T_LE additive
+   61           | relational • T_GE additive
+
+    T_LE  shift, and go to state 114
+    T_GE  shift, and go to state 115
+    '<'   shift, and go to state 116
+    '>'   shift, and go to state 117
+
+    $default  reduce using rule 56 (equality)
+
+
+State 145
+
+   60 relational: relational T_LE additive •
+   63 additive: additive • '+' term
+   64         | additive • '-' term
+
+    '+'  shift, and go to state 118
+    '-'  shift, and go to state 119
+
+    $default  reduce using rule 60 (relational)
+
+
+State 146
+
+   61 relational: relational T_GE additive •
+   63 additive: additive • '+' term
+   64         | additive • '-' term
+
+    '+'  shift, and go to state 118
+    '-'  shift, and go to state 119
+
+    $default  reduce using rule 61 (relational)
+
+
+State 147
+
+   58 relational: relational '<' additive •
+   63 additive: additive • '+' term
+   64         | additive • '-' term
+
+    '+'  shift, and go to state 118
+    '-'  shift, and go to state 119
+
+    $default  reduce using rule 58 (relational)
+
+
+State 148
+
+   59 relational: relational '>' additive •
+   63 additive: additive • '+' term
+   64         | additive • '-' term
+
+    '+'  shift, and go to state 118
+    '-'  shift, and go to state 119
+
+    $default  reduce using rule 59 (relational)
+
+
+State 149
+
+   63 additive: additive '+' term •
+   66 term: term • '*' factor
+   67     | term • '/' factor
+
+    '*'  shift, and go to state 120
+    '/'  shift, and go to state 121
+
+    $default  reduce using rule 63 (additive)
+
+
+State 150
+
+   64 additive: additive '-' term •
+   66 term: term • '*' factor
+   67     | term • '/' factor
+
+    '*'  shift, and go to state 120
+    '/'  shift, and go to state 121
+
+    $default  reduce using rule 64 (additive)
+
+
+State 151
+
+   66 term: term '*' factor •
+
+    $default  reduce using rule 66 (term)
+
+
+State 152
+
+   67 term: term '/' factor •
+
+    $default  reduce using rule 67 (term)
+
+
+State 153
+
+   23 whileStmt: T_ENQUANTO '(' expr ')' stmt •
+
+    $default  reduce using rule 23 (whileStmt)
+
+
+State 154
+
+   27 printStmt: T_IMPRIMIR '(' T_STRING_LIT ')' ';' •
+
+    $default  reduce using rule 27 (printStmt)
+
+
+State 155
+
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT ',' expr • ')' ';'
+
+    ')'  shift, and go to state 163
+
+
+State 156
+
+   26 printStmt: T_IMPRIMIR '(' expr ')' ';' •
+
+    $default  reduce using rule 26 (printStmt)
+
+
+State 157
+
+   28 printStmt: T_IMPRIMIR_TEXTO '(' T_STRING_LIT ')' ';' •
+
+    $default  reduce using rule 28 (printStmt)
+
+
+State 158
+
+   39 printPage: T_IMPRIMIR_PAGINA '(' T_STRING_LIT ')' ';' •
+
+    $default  reduce using rule 39 (printPage)
+
+
+State 159
+
+   40 setColor: T_DEFINIR_COR '(' expr ')' ';' •
+
+    $default  reduce using rule 40 (setColor)
+
+
+State 160
+
+   41 setQuality: T_DEFINIR_QUALIDADE '(' quality ')' ';' •
+
+    $default  reduce using rule 41 (setQuality)
+
+
+State 161
+
+   42 setPaper: T_DEFINIR_PAPEL '(' paperType ')' ';' •
+
+    $default  reduce using rule 42 (setPaper)
+
+
+State 162
+
+   22 ifStmt: T_SE '(' expr ')' stmt T_SENAO • stmt
+
+    T_INT                shift, and go to state 1
+    T_STRING             shift, and go to state 2
+    T_SE                 shift, and go to state 3
+    T_ENQUANTO           shift, and go to state 4
+    T_IMPRIMIR           shift, and go to state 5
+    T_IMPRIMIR_TEXTO     shift, and go to state 6
+    T_IMPRIMIR_PAGINA    shift, and go to state 7
+    T_DEFINIR_COR        shift, and go to state 8
+    T_DEFINIR_QUALIDADE  shift, and go to state 9
+    T_DEFINIR_PAPEL      shift, and go to state 10
+    T_VERIFICAR_TINTA    shift, and go to state 11
+    T_VERIFICAR_PAPEL    shift, and go to state 12
+    T_AGUARDAR_PRONTA    shift, and go to state 13
+    T_RESETAR            shift, and go to state 14
+    T_IDENT              shift, and go to state 15
+    ';'                  shift, and go to state 16
+    '{'                  shift, and go to state 17
+
+    decl         go to state 20
+    stmt         go to state 164
+    assign       go to state 22
+    ifStmt       go to state 23
+    whileStmt    go to state 24
+    block        go to state 25
+    printStmt    go to state 26
+    printerStmt  go to state 27
+    printDoc     go to state 28
+    printPage    go to state 29
+    setColor     go to state 30
+    setQuality   go to state 31
+    setPaper     go to state 32
+    checkInk     go to state 33
+    checkPaper   go to state 34
+    waitReady    go to state 35
+    reset        go to state 36
+
+
+State 163
+
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT ',' expr ')' • ';'
+
+    ';'  shift, and go to state 165
+
+
+State 164
+
+   22 ifStmt: T_SE '(' expr ')' stmt T_SENAO stmt •
+
+    $default  reduce using rule 22 (ifStmt)
+
+
+State 165
+
+   38 printDoc: T_IMPRIMIR '(' T_STRING_LIT ',' expr ')' ';' •
+
+    $default  reduce using rule 38 (printDoc)

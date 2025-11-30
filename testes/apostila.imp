@@ -1,0 +1,19 @@
+// Exemplo: Impressão de apostilas coloridas
+int copias = 15;
+
+imprimir_texto("Configurando para apostila...");
+
+definir_cor(verdadeiro);
+definir_qualidade(ALTA);
+definir_papel(A4);
+
+imprimir_texto("Imprimindo capa...");
+imprimir("capa_apostila.pdf", copias);
+
+imprimir_texto("Imprimindo conteúdo...");
+imprimir("conteudo_apostila.pdf", copias);
+
+verificar_tinta();
+verificar_papel();
+
+imprimir_texto("Apostilas impressas com sucesso!");

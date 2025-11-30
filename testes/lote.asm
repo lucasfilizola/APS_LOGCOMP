@@ -1,0 +1,48 @@
+; Impressora Assembly
+
+PUSH 1
+STORE 0
+PUSH 35
+STORE 1
+L0:
+LOAD 0
+PUSH 3
+LE
+JUMPZ L1
+LOAD 0
+PUSH 1
+ADD
+STORE 0
+LOAD 1
+POP R0
+PRINT_DOC "prova_turma.pdf" R0
+PUSH 1
+POP R0
+SET_QUALITY R0
+PUSH 0
+POP R0
+SET_COLOR R0
+GET_PAPER_COUNT
+LOAD 1
+LT
+JUMPZ L3
+CHECK_PAPER
+PRINTS "Reabastecer papel!"
+L3:
+GET_INK_LEVEL
+PUSH 20
+LT
+JUMPZ L5
+CHECK_INK
+PRINTS "Reabastecer tinta!"
+L5:
+LOAD 0
+PRINT
+PRINTS "Processando turma:"
+GOTO L0
+L1:
+PRINTS "Todas as turmas processadas!"
+PRINTS "Total impresso:"
+GET_PAGES_PRINTED
+PRINT
+HALT

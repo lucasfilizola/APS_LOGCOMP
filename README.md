@@ -1,143 +1,231 @@
-# APS_LOGCOMP
-Repositório para APS de LogComp
-
-
-APS – Lógica da Computação
-Proposta de Linguagem Educacional
-
-# 1 Definições Importantes:
-Uma linguagem simples para alunos e professores automatizarem pequenas rotinas educacionais, como registrar notas, calcular médias, aplicar limites e emitir alertas. O compilador cuida de condições, laços e variáveis internas e gera o assembly .edasm da EduVM.
-
-# 2 Exemplos de Comandos:
-definir nota 80
-somar 10 a nota
-mostrar media
-alarme se media maior 90
-parar
-
-
-# 3 Visão Geral
-Foco no usuário: frases em português, uma instrução por linha, sem símbolos estranhos.
-O compilador implementa internamente condicionais e loops simples.
-A EduVM possui dois registradores (RA, RB), memória básica (PUSH, POP), sensores de ambiente (MEDIA, ACERTOS, TEMPO) e instruções como SET, ADD, CMP, PRINT, HALT.
-A linguagem não expõe if/while; o compilador traduz frases diretas em estruturas de controle equivalentes.
-
-
-# 4 ReferÊncia de Comandos:
-
-
-Controle e cálculo
-
-definir nota N
-
-
-Define a variável nota. → SET nota N
-
-somar N a nota
-subtrair N de nota
-
-
-Ajusta o valor da nota. → ADD / SUB
-
-Condições e alarmes
-
-alarme se media REL K
-
-
-Dispara alerta se a condição for verdadeira.
-REL ∈ {maior, menor, igual} → gera CMP MEDIA, K + salto.
-
-Monitoramento
-
-garantir media acima de X por Ts
-
-
-Garante média mínima durante tempo T.
-Internamente: laço com checagens de MEDIA.
-
-Exibição
-
-mostrar media | mostrar nota | mostrar acertos | mostrar tempo
-
-
-Imprime valor na tela. → PRINT
-
-Interação
-
-perguntar "texto"
-
-
-Mostra a mensagem e lê inteiro. → PROMPT, READINT
-
-Temporização
-
-esperar Ts
-
-
-Pausa de T segundos. → laço DECJZ
-
-Encerramento
-
-parar | halt
-
-
-Finaliza o programa. → HALT
-
-
-# 5 Gramática (EBNF)
-   PROGRAMA   = { LINHA } ;
-LINHA      = [ COMANDO ], ( "\n" | ";" ) ;
-
-COMANDO    = DEFINIR | AJUSTE | ALARME | GARANTIR | MOSTRAR | PERGUNTA | ESPERA | PARAR ;
-
-DEFINIR    = "definir", "nota", INT ;
-AJUSTE     = ( "somar", INT, "a", "nota" )
-           | ( "subtrair", INT, "de", "nota" ) ;
-
-ALARME     = "alarme", "se", "media", REL, INT ;
-REL        = "maior" | "menor" | "igual" ;
-
-GARANTIR   = "garantir", "media", "acima", "de", INT, "por", DUR ;
-
-MOSTRAR    = "mostrar", ( "media" | "nota" | "acertos" | "tempo" ) ;
-
-PERGUNTA   = "perguntar", STRING ;
-ESPERA     = "esperar", DUR ;
-
-PARAR      = "parar" | "halt" ;
-
-INT        = DIGITO, { DIGITO } ;
-DUR        = INT, "s" ;
-STRING     = '"', { CAR }, '"' ;
-
-DIGITO     = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
-CAR        = ? qualquer caractere exceto aspas ? ;
-
-
-# 6 Exemplos
-Exemplos
-
-Cálculo simples
-
-definir nota 70
-somar 10 a nota
-mostrar nota
-parar
-
-
-Alerta
-
-alarme se media maior 80
-mostrar media
-parar
-
-
-Interação e espera
-
-perguntar "Quantos exercícios você fez?"
-esperar 10s
-mostrar tempo
-parar
-
-
-
+# Impressora
+Linguagem para Controle de Impressoras
+
+## Visão Geral
+
+Impressora é uma linguagem para controlar operações básicas de impressoras. Pensada para cenários do dia a dia como impressão de provas, apostilas e documentos.
+
+## Exemplo Rápido
+
+```impressora
+// Professora imprimindo prova
+int alunos = 30;
+
+se (nivel_tinta() < 20) {
+    imprimir_texto("Tinta baixa!");
+}
+
+definir_cor(falso);
+definir_qualidade(MEDIA);
+imprimir("prova.pdf", alunos);
+
+imprimir_texto("Concluído!");
+```
+
+## Comandos
+
+### Configuração
+
+```impressora
+definir_cor(verdadeiro);     // verdadeiro = colorido, falso = P&B
+definir_qualidade(ALTA);     // BAIXA, MEDIA, ALTA
+definir_papel(A4);           // A4, CARTA, A3
+```
+
+### Impressão
+
+```impressora
+imprimir("arquivo.pdf", 10);      // Imprime arquivo N vezes
+imprimir_pagina("Título");        // Imprime uma página
+imprimir_texto("Mensagem");       // Exibe mensagem
+```
+
+### Verificação
+
+```impressora
+verificar_tinta();       // Verifica tinta
+verificar_papel();       // Verifica papel
+aguardar_pronta();       // Aguarda impressora
+resetar();               // Reseta contador
+```
+
+### Sensores
+
+```impressora
+nivel_tinta()            // Nível de tinta (0-100)
+qtd_papel()              // Quantidade de folhas
+esta_pronta()            // 1 se pronta, 0 caso contrário
+paginas_impressas()      // Total impresso
+modo_cor()               // 1 se colorido, 0 se P&B
+tamanho_fila()           // Tamanho da fila
+```
+
+## EBNF
+
+```ebnf
+program         = { decl | stmt } ;
+
+decl            = "int" ident [ "=" expr ] ";"
+                | "string" ident [ "=" string ] ";" ;
+
+stmt            = assign ";"
+                | ifStmt
+                | whileStmt
+                | block
+                | printStmt
+                | printerStmt
+                | ";" ;
+
+assign          = ident "=" (expr | string) ;
+ifStmt          = "se" "(" expr ")" stmt [ "senao" stmt ] ;
+whileStmt       = "enquanto" "(" expr ")" stmt ;
+block           = "{" { stmt } "}" ;
+
+printStmt       = "imprimir" "(" (expr | string) ")" ";"
+                | "imprimir_texto" "(" string ")" ";" ;
+
+printerStmt     = printDoc
+                | printPage
+                | setColor
+                | setQuality
+                | setPaper
+                | checkInk
+                | checkPaper
+                | waitReady
+                | reset ;
+
+printDoc        = "imprimir" "(" string "," expr ")" ";" ;
+printPage       = "imprimir_pagina" "(" string ")" ";" ;
+setColor        = "definir_cor" "(" expr ")" ";" ;
+setQuality      = "definir_qualidade" "(" quality ")" ";" ;
+setPaper        = "definir_papel" "(" paperType ")" ";" ;
+checkInk        = "verificar_tinta" "(" ")" ";" ;
+checkPaper      = "verificar_papel" "(" ")" ";" ;
+waitReady       = "aguardar_pronta" "(" ")" ";" ;
+reset           = "resetar" "(" ")" ";" ;
+
+quality         = "BAIXA" | "MEDIA" | "ALTA" ;
+paperType       = "A4" | "CARTA" | "A3" ;
+
+primary         = number
+                | ident
+                | "(" expr ")"
+                | "nivel_tinta" "(" ")"
+                | "qtd_papel" "(" ")"
+                | "esta_pronta" "(" ")"
+                | "paginas_impressas" "(" ")"
+                | "modo_cor" "(" ")"
+                | "tamanho_fila" "(" ")" ;
+
+expr            = equality ;
+equality        = relational { ("==" | "!=") relational } ;
+relational      = additive  { ("<" | "<=" | ">" | ">=") additive } ;
+additive        = term      { ("+" | "-" ) term } ;
+term            = factor    { ("*" | "/" ) factor } ;
+factor          = [ "-" ] primary ;
+
+ident           = letter { letter | digit | "_" } ;
+number          = digit { digit } ;
+string          = "\"" { any_char_except_quote } "\"" ;
+letter          = "A"…"Z" | "a"…"z" ;
+digit           = "0"…"9" ;
+
+comment_line    = "//" { any_char_exc_newline } ;
+comment_block   = "/*" { any_char } "*/" ;
+```
+
+## Exemplos
+
+### Impressão Simples
+```impressora
+definir_cor(falso);
+definir_qualidade(MEDIA);
+imprimir("apostila.pdf", 1);
+```
+
+### Verificação de Recursos
+```impressora
+int copias = 50;
+
+se (qtd_papel() < copias) {
+    imprimir_texto("Papel insuficiente!");
+} senao {
+    se (nivel_tinta() < 15) {
+        imprimir_texto("Tinta baixa!");
+    } senao {
+        imprimir("trabalho.pdf", copias);
+        imprimir_texto("Sucesso!");
+    }
+}
+```
+
+### Impressão em Lote
+```impressora
+definir_cor(verdadeiro);
+definir_qualidade(ALTA);
+
+imprimir("capa.pdf", 1);
+imprimir("conteudo.pdf", 1);
+imprimir("anexos.pdf", 1);
+
+imprimir_texto("Total:");
+imprimir(paginas_impressas());
+```
+
+### Loop com Verificação
+```impressora
+int turma = 1;
+
+enquanto (turma <= 3) {
+    se (nivel_tinta() < 20) {
+        imprimir_texto("Reabastecer tinta!");
+        verificar_tinta();
+    }
+
+    imprimir("prova_turma.pdf", 35);
+    turma = turma + 1;
+}
+```
+
+## Requisitos
+
+- Flex
+- Bison
+- GCC
+- Make
+- Python 3
+
+### Instalação
+```bash
+sudo apt-get install flex bison gcc make python3
+```
+
+## Compilação e Uso
+
+```bash
+make                                  # Compila o compilador
+./impressora saida.asm < prog.imp     # Gera assembly
+python3 impressoravm.py saida.asm     # Executa na VM
+```
+
+## Testes Prontos
+
+Na pasta `testes/` você encontra programas prontos:
+
+```bash
+# Impressão de provas
+./impressora testes/prova.asm < testes/prova.imp
+python3 impressoravm.py testes/prova.asm
+
+# Impressão de apostilas coloridas
+./impressora testes/apostila.asm < testes/apostila.imp
+python3 impressoravm.py testes/apostila.asm
+
+# Impressão em lote para múltiplas turmas
+./impressora testes/lote.asm < testes/lote.imp
+python3 impressoravm.py testes/lote.asm
+
+# Impressão de certificados
+./impressora testes/certificado.asm < testes/certificado.imp
+python3 impressoravm.py testes/certificado.asm
+```

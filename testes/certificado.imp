@@ -1,0 +1,21 @@
+// Exemplo: Impressão de certificados
+int participantes = 50;
+
+imprimir_texto("Iniciando impressão de certificados...");
+
+definir_cor(verdadeiro);
+definir_qualidade(ALTA);
+definir_papel(A4);
+
+se (qtd_papel() >= participantes) {
+    imprimir("certificados.pdf", participantes);
+    imprimir_texto("Certificados impressos!");
+
+    resetar();
+    imprimir_texto("Contador resetado.");
+} senao {
+    imprimir_texto("ERRO: Papel insuficiente para certificados!");
+}
+
+verificar_tinta();
+verificar_papel();
